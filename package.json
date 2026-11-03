@@ -1,0 +1,13 @@
+{
+  "name": "freshcart",
+  "version": "1.0.0",
+  "description": "freshcart — Online Grocery Store",
+  "scripts": {
+    "start": "node server.js",
+    "mysql1": "node node/mysql-1.js",
+    "mysql2": "node node/mysql-2.js",
+    "rbac": "node node/rbac.js",
+    "rbac-test": "node node/rbac-test.js"
+  },
+  "dependencies": { "mysql2": "^3.11.0" }
+}

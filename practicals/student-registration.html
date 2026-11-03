@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration — Bootstrap 5 (offline)</title>
+
+<!--
+  Practical 5-II — Bootstrap OFFLINE.
+  Instead of the CDN link used in the rest of the site (Practical 5-I),
+  this page loads the files downloaded into  vendor/bootstrap/ , so it
+  works with no internet connection.
+-->
+<link rel="stylesheet" href="../vendor/bootstrap/bootstrap.min.css">
+
+<style>
+  body { background: #F7F3E8; }
+  .card { border: 0; box-shadow: 0 10px 30px rgba(20, 49, 31, 0.1); }
+  .btn-forest { background: #14311F; border-color: #14311F; color: #F7F3E8; }
+  .btn-forest:hover { background: #0E2216; color: #F7F3E8; }
+</style>
+</head>
+<body>
+
+<main class="container py-5" style="max-width: 640px;">
+  <!-- Practical 5-III — simple Bootstrap 5 form: page title, roll number,
+       first name, mobile number, email ID and address -->
+  <h1 class="h3 text-center mb-4">Student Registration</h1>
+
+  <div class="card">
+    <div class="card-body p-4">
+      <form id="reg-form" class="needs-validation" novalidate>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label for="roll" class="form-label">Roll number</label>
+            <input type="number" class="form-control" id="roll" min="1" required>
+            <div class="invalid-feedback">Enter your roll number.</div>
+          </div>
+
+          <div class="col-md-8">
+            <label for="first" class="form-label">First name</label>
+            <input type="text" class="form-control" id="first" required>
+            <div class="invalid-feedback">Enter your first name.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="mobile" class="form-label">Mobile number</label>
+            <input type="tel" class="form-control" id="mobile" pattern="[0-9]{10}" maxlength="10" required>
+            <div class="invalid-feedback">Enter a 10-digit mobile number.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email ID</label>
+            <input type="email" class="form-control" id="email" required>
+            <div class="invalid-feedback">Enter a valid email address.</div>
+          </div>
+
+          <div class="col-12">
+            <label for="address" class="form-label">Address</label>
+            <textarea class="form-control" id="address" rows="3" required></textarea>
+            <div class="invalid-feedback">Enter your address.</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-forest w-100 mt-4">Register</button>
+      </form>
+
+      <div id="result" class="alert alert-success mt-4 mb-0" hidden></div>
+    </div>
+  </div>
+
+  <p class="text-center mt-4"><a href="../index.html">← Back to freshcart</a></p>
+</main>
+
+<script src="../vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script>
+  const form = document.getElementById('reg-form');
+  const result = document.getElementById('result');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.classList.add('was-validated');
+    if (!form.checkValidity()) return;
+
+    const v = (id) => document.getElementById(id).value.trim();
+    result.innerHTML =
+      '<strong>Registered!</strong><br>' +
+      'Roll no. ' + v('roll') + ' · ' + v('first') + '<br>' +
+      v('mobile') + ' · ' + v('email') + '<br>' +
+      v('address').replace(/</g, '&lt;');
+    result.hidden = false;
+  });
+</script>
+</body>
+</html>

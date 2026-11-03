@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>freshcart RBAC Demo</title>
+<style>
+  :root { --green:#2f6b3a; --green-l:#e8f3ea; --ink:#1d2a20; --mute:#667; --line:#dfe5e0;
+          --ok:#1b7f3b; --okbg:#e6f6ea; --bad:#b3261e; --badbg:#fdeceb; --bg:#f6f8f6; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+  header { background:var(--green); color:#fff; padding:14px 20px; }
+  header h1 { margin:0; font-size:18px; } header p { margin:2px 0 0; font-size:13px; opacity:.85; }
+  main { max-width:1000px; margin:0 auto; padding:16px; display:grid; gap:16px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px; }
+  .card h2 { margin:0 0 10px; font-size:15px; }
+  .step { display:inline-block; background:var(--green); color:#fff; border-radius:50%; width:22px; height:22px;
+          text-align:center; font-size:13px; line-height:22px; margin-right:6px; }
+  .row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  input { padding:8px 10px; border:1px solid var(--line); border-radius:6px; font:inherit; min-width:200px; }
+  button { padding:8px 12px; border:1px solid var(--green); background:#fff; color:var(--green); border-radius:6px;
+           font:inherit; cursor:pointer; }
+  button:hover { background:var(--green-l); }
+  button.primary { background:var(--green); color:#fff; }
+  button.primary:hover { background:#255a2f; }
+  .chip { font-size:12px; padding:2px 8px; border-radius:99px; border:1px solid var(--line); background:#fff; }
+  .role { font-weight:600; padding:3px 10px; border-radius:99px; color:#fff; }
+  .role.customer { background:#3b6fb6; } .role.grower { background:#a8741a; } .role.admin { background:#7b2d8e; }
+  table { border-collapse:collapse; width:100%; font-size:14px; }
+  th, td { border:1px solid var(--line); padding:6px 8px; text-align:center; }
+  th:first-child, td:first-child { text-align:left; }
+  td.me, th.me { background:var(--green-l); font-weight:600; }
+  .actions { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px; }
+  .act { border:1px solid var(--line); border-radius:8px; padding:10px; }
+  .act small { display:block; margin-top:6px; color:var(--mute); }
+  .exp-ok { color:var(--ok); } .exp-no { color:var(--bad); }
+  #result { border-radius:8px; padding:12px; border:1px solid var(--line); min-height:70px; }
+  #result.ok { background:var(--okbg); border-color:#b6e2c1; } #result.no { background:var(--badbg); border-color:#f3c0bc; }
+  #result .code { font-size:22px; font-weight:700; } #result.ok .code { color:var(--ok); } #result.no .code { color:var(--bad); }
+  pre { margin:6px 0 0; white-space:pre-wrap; word-break:break-all; font-size:13px; }
+  #log { list-style:none; margin:0; padding:0; max-height:220px; overflow:auto; font-size:13px; }
+  #log li { padding:4px 0; border-bottom:1px dashed var(--line); }
+  .hidden { display:none; } .mute { color:var(--mute); font-size:13px; }
+  code { background:#eef2ee; padding:1px 5px; border-radius:4px; font-size:13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>freshcart — Role-Based Authentication &amp; Access Control demo</h1>
+  <p>Log in as a role, press the buttons, and watch the <b>server</b> allow (200/201) or block (401/403) each request. &nbsp;·&nbsp; <a href="http://localhost:3000/products.html" target="_blank" style="color:#fff">Open the website products page ↗</a> <span style="opacity:.8">(needs <code style="background:rgba(255,255,255,.2);color:#fff">node server.js</code> running)</span></p>
+</header>
+
+<main>
+  <!-- STEP 1: LOGIN = AUTHENTICATION -->
+  <section class="card">
+    <h2><span class="step">1</span>Log in (authentication — "who are you?")</h2>
+    <div class="row" style="margin-bottom:8px">
+      <span class="mute">Quick fill:</span>
+      <button data-fill="user@freshcart.com|password123">Customer</button>
+      <button data-fill="farmer@freshcart.com|growerpass123">Grower</button>
+      <button data-fill="admin@freshcart.com|admin123">Admin</button>
+    </div>
+    <div class="row">
+      <input id="email" placeholder="email" value="user@freshcart.com">
+      <input id="password" type="password" placeholder="password" value="password123">
+      <button class="primary" id="btnLogin">Log in</button>
+      <button id="btnLogout" class="hidden">Log out</button>
+    </div>
+    <p id="who" class="mute" style="margin:10px 0 0">Not logged in.</p>
+    <p id="tokenLine" class="mute hidden" style="margin:4px 0 0"></p>
+  </section>
+
+  <!-- STEP 2: RULES -->
+  <section class="card">
+    <h2><span class="step">2</span>The rules (the permissions table in <code>rbac.js</code>)</h2>
+    <table id="matrix">
+      <thead><tr><th>Action</th><th data-r="customer">customer</th><th data-r="grower">grower</th><th data-r="admin">admin</th></tr></thead>
+      <tbody>
+        <tr data-a="view_products"><td>View products</td><td data-r="customer">✅</td><td data-r="grower">✅</td><td data-r="admin">✅</td></tr>
+        <tr data-a="view_orders"><td>View orders</td><td data-r="customer">own only</td><td data-r="grower">⛔</td><td data-r="admin">all</td></tr>
+        <tr data-a="add_product"><td>Add product</td><td data-r="customer">⛔</td><td data-r="grower">✅</td><td data-r="admin">✅</td></tr>
+        <tr data-a="delete_product"><td>Delete product</td><td data-r="customer">⛔</td><td data-r="grower">own only</td><td data-r="admin">any</td></tr>
+        <tr data-a="view_users"><td>View all users</td><td data-r="customer">⛔</td><td data-r="grower">⛔</td><td data-r="admin">✅</td></tr>
+      </tbody>
+    </table>
+    <p class="mute" style="margin:8px 0 0">The column of the role you are logged in as is highlighted.</p>
+  </section>
+
+  <!-- STEP 3: ACCESS CONTROL -->
+  <section class="card">
+    <h2><span class="step">3</span>Try things (access control — "are you allowed?")</h2>
+    <p class="mute" style="margin-top:0">Every button is always clickable on purpose: the label shows what the rules <i>expect</i>, and the result shows what the <b>server</b> really did.</p>
+    <div class="actions">
+      <div class="act"><button data-act="view_products">View products</button><small data-exp="view_products"></small></div>
+      <div class="act"><button data-act="view_orders">View orders</button><small data-exp="view_orders"></small></div>
+      <div class="act" style="grid-column:span 2">
+        <div class="row" style="margin-bottom:6px">
+          <input id="pName" placeholder="Product name" value="Dragon Fruit" style="min-width:150px;flex:1">
+          <select id="pCat"><option>fruit</option><option>vegetables</option><option>dairy</option><option>bakery</option><option>pantry</option><option>herbs</option></select>
+          <input id="pPrice" type="number" min="1" value="150" style="min-width:70px;width:80px" title="price">
+          <input id="pUnit" value="2 pcs" style="min-width:70px;width:90px" title="unit">
+          <input id="pStock" type="number" min="0" value="25" style="min-width:60px;width:70px" title="stock">
+        </div>
+        <input id="pDesc" placeholder="Description" value="Sweet, juicy dragon fruit." style="width:100%;margin-bottom:6px">
+        <button data-act="add_product">Add this product</button><small data-exp="add_product"></small>
+      </div>
+      <div class="act">
+        <div class="row"><input id="delId" placeholder="product id" style="min-width:110px;width:110px" value="p27">
+        <button data-act="delete_product">Delete product</button></div><small data-exp="delete_product"></small>
+      </div>
+      <div class="act"><button data-act="view_users">View all users</button><small data-exp="view_users"></small></div>
+      <div class="act"><button data-act="forge">🕵️ Forge an admin token</button>
+        <small>Edits the role inside your token to "admin". Expected: <b class="exp-no">blocked — signature no longer matches</b></small></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Server response</h2>
+    <div id="result"><span class="mute">Press a button above.</span></div>
+  </section>
+
+  <section class="card">
+    <h2>Activity log</h2>
+    <ul id="log"><li class="mute">Nothing yet.</li></ul>
+  </section>
+</main>
+
+<script>
+/* ===== state ===== */
+let token = null, role = null, name = null, lastAdded = null;
+const $ = (id) => document.getElementById(id);
+
+/* What the permission rules say (same as PERMISSIONS in rbac.js).
+   'yes' = allowed, 'no' = blocked, other text = allowed with a limit.            */
+const EXPECT = {
+  view_products: { customer:'yes', grower:'yes', admin:'yes' },
+  view_orders:   { customer:'your own orders only', grower:'no', admin:'all orders' },
+  add_product:   { customer:'no', grower:'yes', admin:'yes' },
+  delete_product:{ customer:'no', grower:'only products you own', admin:'yes (any product)' },
+  view_users:    { customer:'no', grower:'no', admin:'yes' }
+};
+
+/* ===== calling the server ===== */
+async function api(method, path, body, tok) {
+  const res = await fetch(path, {
+    method,
+    headers: { 'Content-Type':'application/json', ...(tok ? { Authorization:'Bearer ' + tok } : {}) },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  let data; try { data = await res.json(); } catch (e) { data = {}; }
+  return { status: res.status, data };
+}
+
+function show(label, r) {
+  const ok = r.status < 400;
+  const box = $('result');
+  box.className = ok ? 'ok' : 'no';
+  box.innerHTML = '<div><span class="code">' + r.status + '</span> &nbsp;' +
+    (ok ? 'ALLOWED' : (r.status === 401 ? 'NOT LOGGED IN / INVALID TOKEN' : 'FORBIDDEN')) +
+    ' <span class="mute">— ' + label + '</span></div><pre></pre>';
+  box.querySelector('pre').textContent = JSON.stringify(r.data, null, 2);
+  const li = document.createElement('li');
+  li.textContent = (ok ? '✅ ' : '⛔ ') + r.status + '  ' + (role || 'no login') + ' → ' + label +
+    (r.data.error ? '  (' + r.data.error + ')' : '');
+  const log = $('log'); if (log.firstChild && log.firstChild.className === 'mute') log.innerHTML = '';
+  log.prepend(li);
+}
+
+/* ===== page updates ===== */
+function refreshUI() {
+  const loggedIn = !!token;
+  $('btnLogout').classList.toggle('hidden', !loggedIn);
+  $('btnLogin').classList.toggle('hidden', loggedIn);
+  $('who').innerHTML = loggedIn
+    ? 'Logged in as <b>' + name + '</b> &nbsp;<span class="role ' + role + '">' + role + '</span>'
+    : 'Not logged in.';
+  $('tokenLine').classList.toggle('hidden', !loggedIn);
+  if (loggedIn) $('tokenLine').textContent = 'Token from server (role is inside it, protected by a signature): ' + token.slice(0, 48) + '…';
+
+  document.querySelectorAll('#matrix [data-r]').forEach((el) => el.classList.toggle('me', el.dataset.r === role));
+
+  Object.keys(EXPECT).forEach((a) => {
+    const el = document.querySelector('[data-exp="' + a + '"]');
+    if (!role) { el.textContent = 'Log in first'; return; }
+    const e = EXPECT[a][role];
+    el.innerHTML = 'Expected for <b>' + role + '</b>: ' +
+      (e === 'no' ? '<b class="exp-no">blocked (403)</b>' : '<b class="exp-ok">allowed — ' + e + '</b>');
+  });
+}
+
+/* ===== login / logout ===== */
+document.querySelectorAll('[data-fill]').forEach((b) => b.addEventListener('click', () => {
+  const [e, p] = b.dataset.fill.split('|'); $('email').value = e; $('password').value = p;
+}));
+
+$('btnLogin').addEventListener('click', async () => {
+  const r = await api('POST', '/login', { email: $('email').value.trim(), password: $('password').value });
+  if (r.status === 200) { token = r.data.token; role = r.data.role; name = r.data.name; }
+  show('POST /login', r); refreshUI();
+});
+$('btnLogout').addEventListener('click', () => { token = role = name = null; $('result').className = ''; $('result').innerHTML = '<span class="mute">Logged out. Try an action now to see the 401.</span>'; refreshUI(); });
+
+/* ===== actions ===== */
+function b64urlToStr(s) { return atob(s.replace(/-/g, '+').replace(/_/g, '/')); }
+function strToB64url(s) { return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+
+document.querySelectorAll('[data-act]').forEach((b) => b.addEventListener('click', async () => {
+  const a = b.dataset.act; let r;
+  if (a === 'view_products') r = await api('GET', '/products', null, token), show('GET /products', r);
+  if (a === 'view_orders')   r = await api('GET', '/orders', null, token),   show('GET /orders', r);
+  if (a === 'view_users')    r = await api('GET', '/users', null, token),    show('GET /users', r);
+  if (a === 'add_product') {
+    r = await api('POST', '/products', {
+      name: $('pName').value.trim(), category: $('pCat').value, price: Number($('pPrice').value),
+      unit: $('pUnit').value.trim(), stock: parseInt($('pStock').value, 10), description: $('pDesc').value.trim()
+    }, token);
+    if (r.status === 201) { lastAdded = r.data.id; $('delId').value = r.data.id; r.data.next = 'Open http://localhost:3000/products.html to see it'; }
+    show('POST /products (' + $('pName').value + ')', r);
+  }
+  if (a === 'delete_product') {
+    const id = $('delId').value.trim();
+    r = await api('DELETE', '/products/' + encodeURIComponent(id), null, token); show('DELETE /products/' + id, r);
+  }
+  if (a === 'forge') {
+    if (!token) return show('forged token (log in first)', { status:401, data:{ error:'Log in first, then try to forge' } });
+    const [body, sig] = token.split('.');
+    const fake = JSON.parse(b64urlToStr(body)); fake.role = 'admin';
+    const forged = strToB64url(JSON.stringify(fake)) + '.' + sig;     // same old signature
+    r = await api('GET', '/users', null, forged); show('GET /users with a FORGED admin token', r);
+  }
+}));
+
+refreshUI();
+</script>
+</body>
+</html>

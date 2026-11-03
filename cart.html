@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart — freshcart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!--
+  =====================================================================
+  THIS PAGE (Cart) = TAILWIND COMPONENT   (Practical 6)
+  Everything below the shared navbar is styled with Tailwind utility
+  classes only — both the markup here and the rows that js/cart.js
+  builds. Bootstrap is still loaded because the shared navbar needs it
+  for the mobile menu toggle.
+  =====================================================================
+-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="js/tailwind-config.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-paper tw-page">
+
+  <div id="site-header"></div>
+
+  <!-- ============ 5. SHOPPING CART ============ -->
+  <main class="px-4 pb-20 pt-10 sm:pt-14">
+
+    <div class="mx-auto max-w-xl text-center">
+      <h1 class="font-display text-4xl font-bold text-forest sm:text-5xl">Your cart</h1>
+      <p class="mt-3 text-slate-500">Tick what you want in this order, change quantities, or drag ⠿ to reorder.</p>
+    </div>
+
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 lg:grid-cols-[1fr_340px]">
+
+      <!-- Left: item list -->
+      <section aria-labelledby="cart-heading">
+        <div class="overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50/60 to-amber-50/60 p-[1px] shadow-xl shadow-forest/5">
+          <div class="rounded-[calc(1.5rem-1px)] bg-white/90 px-5 py-6 backdrop-blur-sm sm:px-7">
+
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
+              <h2 id="cart-heading" class="font-display text-xl font-semibold text-forest">Items</h2>
+              <span id="item-count" class="rounded-full bg-forest px-3 py-1 font-mono text-xs text-paper">0 items</span>
+            </div>
+
+            <!-- 7. LOCATION / DELIVERY (Geolocation API) -->
+            <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <button id="locate-btn" type="button"
+                class="shrink-0 rounded-full border border-leaf-dark px-3 py-1 font-body text-xs font-medium text-leaf-dark transition-colors hover:bg-leaf-dark hover:text-white">
+                📍 Use my location
+              </button>
+              <p id="delivery-line" class="font-mono text-xs text-leaf-dark" aria-live="polite">Add your location to check delivery.</p>
+            </div>
+
+            <!-- Rows are built by js/cart.js with Tailwind classes -->
+            <ul id="cart-lines" class="mt-4 flex flex-col gap-1"></ul>
+
+            <div id="cart-empty" class="hidden py-12 text-center">
+              <p class="text-4xl" aria-hidden="true">🧺</p>
+              <p class="mt-3 font-body text-sm font-medium text-slate-700">Your cart is empty</p>
+              <p class="mt-1 text-sm text-slate-400">Add something fresh and it will show up here.</p>
+              <a href="products.html"
+                class="mt-5 inline-block rounded-xl bg-forest px-5 py-2.5 font-body text-sm font-medium text-paper transition-colors hover:bg-forest/90">
+                Browse products
+              </a>
+            </div>
+
+            <div class="mt-4 flex justify-end border-t border-slate-100 pt-4">
+              <button id="clear-cart" type="button"
+                class="font-body text-xs text-slate-400 transition-colors hover:text-red-500">
+                Clear cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: order summary -->
+      <aside class="lg:sticky lg:top-24 lg:self-start" aria-labelledby="summary-heading">
+        <div class="rounded-3xl bg-white/90 p-6 shadow-xl shadow-forest/5 ring-1 ring-emerald-100">
+          <h2 id="summary-heading" class="font-display text-xl font-semibold text-forest">Order summary</h2>
+
+          <dl class="mt-4 space-y-2 font-body text-sm text-slate-600">
+            <div class="flex justify-between">
+              <dt>Subtotal</dt>
+              <dd id="sum-subtotal" class="font-mono text-slate-800">₹0</dd>
+            </div>
+            <div class="flex justify-between">
+              <dt>Delivery</dt>
+              <dd id="sum-fee" class="font-mono text-slate-800">₹0</dd>
+            </div>
+            <div class="flex justify-between border-t border-slate-100 pt-3 text-base font-semibold text-forest">
+              <dt>Total</dt>
+              <dd id="sum-total" class="font-mono">₹0</dd>
+            </div>
+          </dl>
+
+          <!-- free-delivery progress -->
+          <div class="mt-5">
+            <p id="free-msg" class="font-body text-xs text-slate-500"></p>
+            <div class="mt-2 h-2 overflow-hidden rounded-full bg-slate-100" role="progressbar" aria-label="Progress to free delivery" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="free-bar-wrap">
+              <div id="free-bar" class="h-full rounded-full bg-leaf transition-all duration-300" style="width:0%"></div>
+            </div>
+          </div>
+
+          <a id="checkout-btn" href="checkout.html"
+            class="mt-6 block w-full rounded-xl bg-forest py-3 text-center font-body text-sm font-medium text-paper transition-colors hover:bg-forest/90">
+            Continue to checkout
+          </a>
+          <a href="products.html" class="mt-3 block text-center font-body text-xs text-leaf-dark hover:underline">Keep shopping</a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>

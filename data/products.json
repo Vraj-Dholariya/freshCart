@@ -1,0 +1,926 @@
+{
+  "store": {
+    "name": "freshcart",
+    "tagline": "Fresh groceries, delivered",
+    "currency": "INR",
+    "freeDeliveryAbove": 499,
+    "deliveryFee": 30
+  },
+  "categories": [
+    {
+      "id": "vegetables",
+      "name": "Vegetables",
+      "icon": "🥕",
+      "blurb": "Root to leaf, cut this week"
+    },
+    {
+      "id": "fruit",
+      "name": "Fruit",
+      "icon": "🍑",
+      "blurb": "Orchard-ripe, no cold storage"
+    },
+    {
+      "id": "dairy",
+      "name": "Dairy & Eggs",
+      "icon": "🥛",
+      "blurb": "Small-batch, local herds"
+    },
+    {
+      "id": "bakery",
+      "name": "Bakery",
+      "icon": "🍞",
+      "blurb": "Baked before sunrise"
+    },
+    {
+      "id": "pantry",
+      "name": "Pantry",
+      "icon": "🌾",
+      "blurb": "Grains, oils, staples"
+    },
+    {
+      "id": "herbs",
+      "name": "Herbs",
+      "icon": "🌿",
+      "blurb": "Cut fresh, still rooted"
+    }
+  ],
+  "products": [
+    {
+      "id": "p01",
+      "name": "Carrots",
+      "category": "vegetables",
+      "emoji": "🥕",
+      "image": "",
+      "wiki": [
+        "Carrot"
+      ],
+      "price": 40,
+      "unit": "500 g",
+      "rating": 4.6,
+      "organic": true,
+      "stock": 40,
+      "featured": true,
+      "farm": "Kamrej Organic Farm",
+      "description": "Sweet, snappy carrots pulled the morning they're packed. Good raw, roasted or grated into a salad.",
+      "tags": [
+        "root",
+        "crunchy",
+        "salad"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 41,
+        "protein": 0.9,
+        "carbs": 9.6,
+        "fat": 0.2,
+        "fiber": 2.8
+      }
+    },
+    {
+      "id": "p02",
+      "name": "Cherry tomatoes",
+      "category": "vegetables",
+      "emoji": "🍅",
+      "image": "",
+      "wiki": [
+        "Cherry tomato",
+        "Tomato"
+      ],
+      "price": 60,
+      "unit": "250 g",
+      "rating": 4.7,
+      "organic": true,
+      "stock": 32,
+      "featured": true,
+      "farm": "Bardoli Growers Co-op",
+      "description": "Vine-ripened and sun-sweet. Halve them over pasta or eat them straight from the punnet.",
+      "tags": [
+        "salad",
+        "snack",
+        "vine"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 18,
+        "protein": 0.9,
+        "carbs": 3.9,
+        "fat": 0.2,
+        "fiber": 1.2
+      }
+    },
+    {
+      "id": "p03",
+      "name": "Spinach",
+      "category": "vegetables",
+      "emoji": "🥬",
+      "image": "",
+      "wiki": [
+        "Spinach"
+      ],
+      "price": 30,
+      "unit": "1 bunch",
+      "rating": 4.4,
+      "organic": true,
+      "stock": 25,
+      "featured": false,
+      "farm": "Sun Valley Organic Farm",
+      "description": "Tender leaves with the roots trimmed, washed once. Wilts down fast into dal, sabzi or eggs.",
+      "tags": [
+        "leafy",
+        "iron",
+        "greens"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 23,
+        "protein": 2.9,
+        "carbs": 3.6,
+        "fat": 0.4,
+        "fiber": 2.2
+      }
+    },
+    {
+      "id": "p04",
+      "name": "Broccoli",
+      "category": "vegetables",
+      "emoji": "🥦",
+      "image": "",
+      "wiki": [
+        "Broccoli"
+      ],
+      "price": 55,
+      "unit": "1 head",
+      "rating": 4.3,
+      "organic": false,
+      "stock": 18,
+      "featured": false,
+      "farm": "Navsari Growers",
+      "description": "Tight green florets and a crisp stem. Steam for four minutes and it's done.",
+      "tags": [
+        "green",
+        "steam",
+        "fibre"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 34,
+        "protein": 2.8,
+        "carbs": 6.6,
+        "fat": 0.4,
+        "fiber": 2.6
+      }
+    },
+    {
+      "id": "p05",
+      "name": "Potatoes",
+      "category": "vegetables",
+      "emoji": "🥔",
+      "image": "",
+      "wiki": [
+        "Potato"
+      ],
+      "price": 35,
+      "unit": "1 kg",
+      "rating": 4.5,
+      "organic": false,
+      "stock": 60,
+      "featured": false,
+      "farm": "Deesa Farms",
+      "description": "All-purpose potatoes with a firm bite. They hold their shape for curries and crisp up well when roasted.",
+      "tags": [
+        "staple",
+        "root",
+        "all-purpose"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 77,
+        "protein": 2.0,
+        "carbs": 17.5,
+        "fat": 0.1,
+        "fiber": 2.2
+      }
+    },
+    {
+      "id": "p06",
+      "name": "Peaches",
+      "category": "fruit",
+      "emoji": "🍑",
+      "image": "",
+      "wiki": [
+        "Peach"
+      ],
+      "price": 120,
+      "unit": "6 pcs",
+      "rating": 4.8,
+      "organic": true,
+      "stock": 14,
+      "featured": true,
+      "farm": "Navsari Orchards",
+      "description": "Ripened on the tree and packed without cold storage. Juicy enough to need a napkin.",
+      "tags": [
+        "stone fruit",
+        "sweet",
+        "seasonal"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 39,
+        "protein": 0.9,
+        "carbs": 9.5,
+        "fat": 0.3,
+        "fiber": 1.5
+      }
+    },
+    {
+      "id": "p07",
+      "name": "Bananas",
+      "category": "fruit",
+      "emoji": "🍌",
+      "image": "",
+      "wiki": [
+        "Banana"
+      ],
+      "price": 50,
+      "unit": "6 pcs",
+      "rating": 4.5,
+      "organic": false,
+      "stock": 50,
+      "featured": false,
+      "farm": "Bharuch Banana Growers",
+      "description": "Naturally ripened, not gassed. Firm now, spotty and sweet in three days.",
+      "tags": [
+        "breakfast",
+        "snack",
+        "potassium"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 89,
+        "protein": 1.1,
+        "carbs": 22.8,
+        "fat": 0.3,
+        "fiber": 2.6
+      }
+    },
+    {
+      "id": "p08",
+      "name": "Apples",
+      "category": "fruit",
+      "emoji": "🍎",
+      "image": "",
+      "wiki": [
+        "Apple"
+      ],
+      "price": 180,
+      "unit": "1 kg",
+      "rating": 4.4,
+      "organic": false,
+      "stock": 22,
+      "featured": false,
+      "farm": "Kashmir Valley Co-op",
+      "description": "Crunchy red apples with a clean sweetness. Keep them in the fridge and they last a fortnight.",
+      "tags": [
+        "crunchy",
+        "lunchbox",
+        "red"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 52,
+        "protein": 0.3,
+        "carbs": 13.8,
+        "fat": 0.2,
+        "fiber": 2.4
+      }
+    },
+    {
+      "id": "p09",
+      "name": "Strawberries",
+      "category": "fruit",
+      "emoji": "🍓",
+      "image": "",
+      "wiki": [
+        "Strawberry"
+      ],
+      "price": 140,
+      "unit": "250 g",
+      "rating": 4.6,
+      "organic": true,
+      "stock": 0,
+      "featured": false,
+      "farm": "Mahabaleshwar Berry Farm",
+      "description": "Small, fragrant and deep red to the stem. Out of season right now, back in the winter harvest.",
+      "tags": [
+        "berries",
+        "dessert",
+        "seasonal"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 32,
+        "protein": 0.7,
+        "carbs": 7.7,
+        "fat": 0.3,
+        "fiber": 2.0
+      }
+    },
+    {
+      "id": "p10",
+      "name": "Grapes",
+      "category": "fruit",
+      "emoji": "🍇",
+      "image": "",
+      "wiki": [
+        "Grape"
+      ],
+      "price": 90,
+      "unit": "500 g",
+      "rating": 4.5,
+      "organic": false,
+      "stock": 28,
+      "featured": false,
+      "farm": "Nashik Vineyards",
+      "description": "Seedless green grapes, thin-skinned and sweet. Chill them and they taste like candy.",
+      "tags": [
+        "seedless",
+        "snack",
+        "sweet"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 69,
+        "protein": 0.7,
+        "carbs": 18.1,
+        "fat": 0.2,
+        "fiber": 0.9
+      }
+    },
+    {
+      "id": "p11",
+      "name": "Whole milk",
+      "category": "dairy",
+      "emoji": "🥛",
+      "image": "",
+      "wiki": [
+        "Milk"
+      ],
+      "price": 64,
+      "unit": "1 L",
+      "rating": 4.7,
+      "organic": false,
+      "stock": 45,
+      "featured": true,
+      "farm": "Anand Dairy Collective",
+      "description": "Full-cream milk from small local herds, pasteurised gently and bottled the same day.",
+      "tags": [
+        "milk",
+        "breakfast",
+        "fresh"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 61,
+        "protein": 3.2,
+        "carbs": 4.8,
+        "fat": 3.3,
+        "fiber": 0
+      }
+    },
+    {
+      "id": "p12",
+      "name": "Free-range eggs",
+      "category": "dairy",
+      "emoji": "🥚",
+      "image": "",
+      "wiki": [
+        "Egg as food"
+      ],
+      "price": 90,
+      "unit": "12 pcs",
+      "rating": 4.8,
+      "organic": true,
+      "stock": 36,
+      "featured": true,
+      "farm": "Sun Valley Organic Farm",
+      "description": "Deep-yellow yolks from hens that roam. Collected daily and packed in recycled trays.",
+      "tags": [
+        "protein",
+        "breakfast",
+        "free-range"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 143,
+        "protein": 12.6,
+        "carbs": 0.7,
+        "fat": 9.5,
+        "fiber": 0
+      }
+    },
+    {
+      "id": "p13",
+      "name": "Paneer",
+      "category": "dairy",
+      "emoji": "🧀",
+      "image": "",
+      "wiki": [
+        "Paneer"
+      ],
+      "price": 110,
+      "unit": "200 g",
+      "rating": 4.6,
+      "organic": false,
+      "stock": 20,
+      "featured": false,
+      "farm": "Anand Dairy Collective",
+      "description": "Soft, milky paneer set that morning. Cube it into curries or grill it with spices.",
+      "tags": [
+        "protein",
+        "vegetarian",
+        "curry"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 265,
+        "protein": 18.3,
+        "carbs": 1.2,
+        "fat": 20.8,
+        "fiber": 0
+      }
+    },
+    {
+      "id": "p14",
+      "name": "Curd",
+      "category": "dairy",
+      "emoji": "🥣",
+      "image": "",
+      "wiki": [
+        "Yogurt",
+        "Curd"
+      ],
+      "price": 45,
+      "unit": "400 g",
+      "rating": 4.4,
+      "organic": false,
+      "stock": 30,
+      "featured": false,
+      "farm": "Anand Dairy Collective",
+      "description": "Thick, mildly tangy set curd cultured overnight in clay-lined tubs.",
+      "tags": [
+        "probiotic",
+        "raita",
+        "cooling"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 61,
+        "protein": 3.5,
+        "carbs": 4.7,
+        "fat": 3.3,
+        "fiber": 0
+      }
+    },
+    {
+      "id": "p15",
+      "name": "Butter",
+      "category": "dairy",
+      "emoji": "🧈",
+      "image": "",
+      "wiki": [
+        "Butter"
+      ],
+      "price": 60,
+      "unit": "100 g",
+      "rating": 4.5,
+      "organic": false,
+      "stock": 26,
+      "featured": false,
+      "farm": "Kheda Creamery",
+      "description": "Cultured, lightly salted butter churned in small batches.",
+      "tags": [
+        "spread",
+        "baking",
+        "salted"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 717,
+        "protein": 0.9,
+        "carbs": 0.1,
+        "fat": 81,
+        "fiber": 0
+      }
+    },
+    {
+      "id": "p16",
+      "name": "Sourdough loaf",
+      "category": "bakery",
+      "emoji": "🍞",
+      "image": "",
+      "wiki": [
+        "Sourdough"
+      ],
+      "price": 95,
+      "unit": "1 loaf",
+      "rating": 4.9,
+      "organic": false,
+      "stock": 12,
+      "featured": true,
+      "farm": "Kathor Bakehouse",
+      "description": "Slow-fermented for 24 hours, crackly crust, open crumb. Baked before sunrise.",
+      "tags": [
+        "sourdough",
+        "loaf",
+        "artisan"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 259,
+        "protein": 8.5,
+        "carbs": 49,
+        "fat": 1.5,
+        "fiber": 2.4
+      }
+    },
+    {
+      "id": "p17",
+      "name": "Croissants",
+      "category": "bakery",
+      "emoji": "🥐",
+      "image": "",
+      "wiki": [
+        "Croissant"
+      ],
+      "price": 120,
+      "unit": "4 pcs",
+      "rating": 4.6,
+      "organic": false,
+      "stock": 10,
+      "featured": false,
+      "farm": "Kathor Bakehouse",
+      "description": "Buttery, flaky and best warmed for five minutes. Made with real butter, nothing else.",
+      "tags": [
+        "breakfast",
+        "butter",
+        "pastry"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 406,
+        "protein": 8.2,
+        "carbs": 45.8,
+        "fat": 21,
+        "fiber": 2.6
+      }
+    },
+    {
+      "id": "p18",
+      "name": "Whole-wheat bread",
+      "category": "bakery",
+      "emoji": "🍞",
+      "image": "",
+      "wiki": [
+        "Whole-wheat bread",
+        "Whole wheat bread",
+        "Brown bread",
+        "Bread"
+      ],
+      "price": 50,
+      "unit": "400 g",
+      "rating": 4.3,
+      "organic": false,
+      "stock": 34,
+      "featured": false,
+      "farm": "Kathor Bakehouse",
+      "description": "Soft sandwich loaf made with stone-ground whole wheat and no added sugar.",
+      "tags": [
+        "sandwich",
+        "whole grain",
+        "daily"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 247,
+        "protein": 13,
+        "carbs": 41,
+        "fat": 3.4,
+        "fiber": 7
+      }
+    },
+    {
+      "id": "p19",
+      "name": "Baguette",
+      "category": "bakery",
+      "emoji": "🥖",
+      "image": "",
+      "wiki": [
+        "Baguette"
+      ],
+      "price": 70,
+      "unit": "1 pc",
+      "rating": 4.4,
+      "organic": false,
+      "stock": 15,
+      "featured": false,
+      "farm": "Kathor Bakehouse",
+      "description": "Thin crackly crust and a chewy middle. Eat it the day it's baked, toast it the day after.",
+      "tags": [
+        "crusty",
+        "french",
+        "dinner"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 270,
+        "protein": 9,
+        "carbs": 56,
+        "fat": 1.2,
+        "fiber": 2.4
+      }
+    },
+    {
+      "id": "p20",
+      "name": "Rolled oats",
+      "category": "pantry",
+      "emoji": "🌾",
+      "image": "",
+      "wiki": [
+        "Rolled oats",
+        "Oatmeal",
+        "Oat"
+      ],
+      "price": 120,
+      "unit": "1 kg",
+      "rating": 4.5,
+      "organic": true,
+      "stock": 40,
+      "featured": true,
+      "farm": "Sabarkantha Grain Co-op",
+      "description": "Wholegrain rolled oats with no additives. Cooks in five minutes.",
+      "tags": [
+        "breakfast",
+        "whole grain",
+        "porridge"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 379,
+        "protein": 13.2,
+        "carbs": 67.7,
+        "fat": 6.5,
+        "fiber": 10.1
+      }
+    },
+    {
+      "id": "p21",
+      "name": "Olive oil",
+      "category": "pantry",
+      "emoji": "🫒",
+      "image": "",
+      "wiki": [
+        "Olive oil"
+      ],
+      "price": 450,
+      "unit": "500 ml",
+      "rating": 4.6,
+      "organic": false,
+      "stock": 16,
+      "featured": false,
+      "farm": "Imported, bottled locally",
+      "description": "Cold-pressed extra virgin olive oil with a peppery finish. For dressing and dipping.",
+      "tags": [
+        "oil",
+        "cold-pressed",
+        "dressing"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 884,
+        "protein": 0,
+        "carbs": 0,
+        "fat": 100,
+        "fiber": 0
+      }
+    },
+    {
+      "id": "p22",
+      "name": "Honey",
+      "category": "pantry",
+      "emoji": "🍯",
+      "image": "",
+      "wiki": [
+        "Honey"
+      ],
+      "price": 220,
+      "unit": "250 g",
+      "rating": 4.7,
+      "organic": true,
+      "stock": 24,
+      "featured": false,
+      "farm": "Sun Valley Organic Farm",
+      "description": "Raw, unfiltered wildflower honey collected from hives on the farm's edge.",
+      "tags": [
+        "raw",
+        "sweetener",
+        "wildflower"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 304,
+        "protein": 0.3,
+        "carbs": 82.4,
+        "fat": 0,
+        "fiber": 0.2
+      }
+    },
+    {
+      "id": "p23",
+      "name": "Basmati rice",
+      "category": "pantry",
+      "emoji": "🍚",
+      "image": "",
+      "wiki": [
+        "Basmati"
+      ],
+      "price": 160,
+      "unit": "1 kg",
+      "rating": 4.5,
+      "organic": false,
+      "stock": 38,
+      "featured": false,
+      "farm": "Punjab Rice Growers",
+      "description": "Long-grain, aged basmati that cooks up fluffy and fragrant.",
+      "tags": [
+        "rice",
+        "aged",
+        "staple"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 350,
+        "protein": 7.1,
+        "carbs": 78,
+        "fat": 0.6,
+        "fiber": 1.3
+      }
+    },
+    {
+      "id": "p24",
+      "name": "Peanut butter",
+      "category": "pantry",
+      "emoji": "🥜",
+      "image": "",
+      "wiki": [
+        "Peanut butter"
+      ],
+      "price": 180,
+      "unit": "340 g",
+      "rating": 4.4,
+      "organic": false,
+      "stock": 19,
+      "featured": false,
+      "farm": "Junagadh Peanut Works",
+      "description": "Just roasted peanuts and a pinch of salt. Stir the oil back in and spread.",
+      "tags": [
+        "spread",
+        "protein",
+        "no sugar"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 588,
+        "protein": 25,
+        "carbs": 20,
+        "fat": 50,
+        "fiber": 6
+      }
+    },
+    {
+      "id": "p25",
+      "name": "Basil",
+      "category": "herbs",
+      "emoji": "🌿",
+      "image": "",
+      "wiki": [
+        "Basil"
+      ],
+      "price": 35,
+      "unit": "1 pot",
+      "rating": 4.6,
+      "organic": true,
+      "stock": 20,
+      "featured": true,
+      "farm": "Sun Valley Organic Farm",
+      "description": "A potted basil plant with roots still in. Snip what you need and keep it on the windowsill.",
+      "tags": [
+        "potted",
+        "pasta",
+        "pizza"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 23,
+        "protein": 3.2,
+        "carbs": 2.7,
+        "fat": 0.6,
+        "fiber": 1.6
+      }
+    },
+    {
+      "id": "p26",
+      "name": "Mint",
+      "category": "herbs",
+      "emoji": "🌱",
+      "image": "",
+      "wiki": [
+        "Mentha",
+        "Peppermint"
+      ],
+      "price": 20,
+      "unit": "1 bunch",
+      "rating": 4.5,
+      "organic": true,
+      "stock": 30,
+      "featured": false,
+      "farm": "Sun Valley Organic Farm",
+      "description": "Fragrant, full-leaf mint for chutneys, chaas and cold drinks.",
+      "tags": [
+        "chutney",
+        "drinks",
+        "cooling"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 44,
+        "protein": 3.3,
+        "carbs": 8.4,
+        "fat": 0.7,
+        "fiber": 6.8
+      }
+    },
+    {
+      "id": "p27",
+      "name": "Coriander",
+      "category": "herbs",
+      "emoji": "🌿",
+      "image": "",
+      "wiki": [
+        "Coriander"
+      ],
+      "price": 15,
+      "unit": "1 bunch",
+      "rating": 4.4,
+      "organic": false,
+      "stock": 44,
+      "featured": false,
+      "farm": "Kamrej Organic Farm",
+      "description": "Bright green coriander with the roots on, so it stays fresh longer in the fridge.",
+      "tags": [
+        "garnish",
+        "chutney",
+        "daily"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 23,
+        "protein": 2.1,
+        "carbs": 3.7,
+        "fat": 0.5,
+        "fiber": 2.8
+      }
+    },
+    {
+      "id": "p28",
+      "name": "Curry leaves",
+      "category": "herbs",
+      "emoji": "🍃",
+      "image": "",
+      "wiki": [
+        "Curry tree",
+        "Murraya koenigii"
+      ],
+      "price": 10,
+      "unit": "1 bunch",
+      "rating": 4.5,
+      "organic": false,
+      "stock": 35,
+      "featured": false,
+      "farm": "Navsari Growers",
+      "description": "Glossy curry leaves picked on the stem. Crackle them in hot oil for tempering.",
+      "tags": [
+        "tempering",
+        "south indian",
+        "aroma"
+      ],
+      "nutrition": {
+        "per": "100 g",
+        "calories": 108,
+        "protein": 6.1,
+        "carbs": 18.7,
+        "fat": 1,
+        "fiber": 6.4
+      }
+    }
+  ]
+}

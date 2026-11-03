@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — freshcart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- BOOTSTRAP COMPONENT: grid, input group, form controls, form switch, cards -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <header class="page-head">
+    <h1>Shop the harvest</h1>
+    <p>Search, filter, or drag a product straight into your cart.</p>
+  </header>
+
+  <main class="container pb-5">
+
+    <!-- ============ 3. SEARCH + filters ============ -->
+    <section class="filter-bar" aria-label="Search and filter products">
+      <div class="input-group">
+        <span class="input-group-text" aria-hidden="true">🔍</span>
+        <input id="search-input" type="search" class="form-control" placeholder="Search products, farms, tags…" autocomplete="off" aria-label="Search products">
+        <button id="search-clear" class="btn btn-outline-forest" type="button" hidden>Clear</button>
+      </div>
+
+      <div id="category-chips" class="d-flex flex-wrap gap-2 mt-3" role="group" aria-label="Filter by category"></div>
+
+      <div class="row g-3 align-items-center mt-1">
+        <div class="col-12 col-sm-6 col-md-4">
+          <label for="sort-select" class="visually-hidden">Sort products</label>
+          <select id="sort-select" class="form-select">
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+            <option value="rating">Top rated</option>
+            <option value="name">Name: A to Z</option>
+          </select>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="form-check form-switch mb-0">
+            <input class="form-check-input" type="checkbox" role="switch" id="organic-switch">
+            <label class="form-check-label" for="organic-switch">Organic only</label>
+          </div>
+        </div>
+      </div>
+
+      <p class="drag-tip">Tip: on a computer, drag any product card down onto the Cart or Wishlist zone that appears.</p>
+    </section>
+
+    <p id="result-count" class="result-count" aria-live="polite"></p>
+
+    <!-- ============ 2. PRODUCTS grid (rendered from data/products.json) ============ -->
+    <div id="product-grid" class="row g-3 g-md-4">
+      <p class="text-secondary">Loading products…</p>
+    </div>
+  </main>
+
+  <!-- ============ 9. DRAG & DROP zones (HTML5 Drag and Drop API) ============ -->
+  <div class="drop-dock" aria-hidden="true">
+    <div class="drop-zone" id="drop-cart" data-action="cart">
+      🛒 Drop to add to cart
+      <small><span data-cart-count>0</span> in cart</small>
+    </div>
+    <div class="drop-zone" id="drop-wish" data-action="wishlist">
+      ♥ Drop to save
+      <small><span data-wish-count>0</span> saved</small>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>

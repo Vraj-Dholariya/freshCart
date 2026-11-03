@@ -1,0 +1,847 @@
+/* ============================================================
+   freshcart — css/style.css
+   Brand tokens + shared header/footer + the BOOTSTRAP half of the
+   site (home, products, product details, checkout).
+
+   The TAILWIND half (cart, wishlist, sign in) is styled with utility
+   classes directly in those HTML files, so very little CSS for it
+   lives here.
+
+   Sections
+     1. Tokens & base          6. Product card
+     2. Header (navbar)        7. Products page: filters + drag & drop
+     3. Buttons & forms        8. Product details
+     4. Home: hero, photo      9. Checkout
+     5. Home: categories       10. Toast, footer, responsive
+   ============================================================ */
+
+/* ---------- 1. Tokens & base ---------- */
+
+:root {
+  --forest: #14311F;
+  --leaf: #6BAA75;
+  --leaf-dark: #3F7A4B;   /* leaf, darkened enough to read as small text */
+  --citrus: #F2A93B;
+  --paper: #F7F3E8;
+  --ink: #1E2620;
+  --tomato: #D64545;
+  --muted: #5F6A5E;
+  --mist: #E8F0E2;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  font-family: 'Work Sans', sans-serif;
+  color: var(--ink);
+}
+
+a { text-decoration: none; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 2px;
+}
+
+[v-cloak] { display: none !important; }   /* hides Vue templates until Vue is ready */
+
+/* ---------- 2. Header (navbar, injected by store.js) ---------- */
+
+/* sticky must sit on the wrapper — it is a direct child of <body> */
+#site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--paper);
+  border-bottom: 1px solid rgba(20, 49, 31, 0.08);
+}
+
+.navbar {
+  padding: 18px 40px;
+  background: var(--paper);
+}
+
+.logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--forest);
+}
+
+.logo span { color: var(--citrus); }
+
+.nav-links { display: flex; gap: 28px; align-items: center; }
+
+.nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 0 0 4px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.nav-link:hover,
+.nav-link:focus { color: var(--forest); }
+
+.nav-link.active { border-bottom-color: var(--citrus); color: var(--forest); }
+
+.nav-user { font-family: 'IBM Plex Mono', monospace; color: var(--leaf-dark); }
+
+.nav-badge {
+  display: inline-block;
+  min-width: 18px;
+  padding: 1px 6px;
+  margin-left: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+  background: var(--citrus);
+  color: var(--forest);
+  border-radius: 20px;
+}
+.nav-badge[hidden] { display: none; }
+
+/* ---------- 3. Buttons & forms (Bootstrap components, re-coloured) ---------- */
+
+.btn-fc {
+  --bs-btn-color: var(--forest);
+  --bs-btn-bg: var(--citrus);
+  --bs-btn-border-color: var(--citrus);
+  --bs-btn-hover-color: var(--forest);
+  --bs-btn-hover-bg: #E59A2B;
+  --bs-btn-hover-border-color: #E59A2B;
+  --bs-btn-active-color: var(--forest);
+  --bs-btn-active-bg: #D98F22;
+  --bs-btn-active-border-color: #D98F22;
+  --bs-btn-disabled-color: var(--muted);
+  --bs-btn-disabled-bg: #E3DFD0;
+  --bs-btn-disabled-border-color: #E3DFD0;
+  font-weight: 600;
+}
+
+.btn-forest {
+  --bs-btn-color: var(--paper);
+  --bs-btn-bg: var(--forest);
+  --bs-btn-border-color: var(--forest);
+  --bs-btn-hover-color: var(--paper);
+  --bs-btn-hover-bg: #0E2216;
+  --bs-btn-hover-border-color: #0E2216;
+  --bs-btn-active-color: var(--paper);
+  --bs-btn-active-bg: #0A1A10;
+  --bs-btn-active-border-color: #0A1A10;
+  --bs-btn-disabled-bg: var(--forest);
+  --bs-btn-disabled-border-color: var(--forest);
+  font-weight: 600;
+}
+
+.btn-outline-forest {
+  --bs-btn-color: var(--forest);
+  --bs-btn-border-color: rgba(20, 49, 31, 0.35);
+  --bs-btn-hover-color: var(--paper);
+  --bs-btn-hover-bg: var(--forest);
+  --bs-btn-hover-border-color: var(--forest);
+  --bs-btn-active-color: var(--paper);
+  --bs-btn-active-bg: var(--forest);
+  --bs-btn-active-border-color: var(--forest);
+  font-weight: 500;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 0.2rem rgba(107, 170, 117, 0.25);
+}
+
+.form-check-input:checked {
+  background-color: var(--forest);
+  border-color: var(--forest);
+}
+
+.form-check-input:focus {
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 0.2rem rgba(107, 170, 117, 0.25);
+}
+
+.form-label { font-weight: 500; font-size: 14px; }
+
+/* ---------- 4. Home: hero + store photo ---------- */
+
+.hero {
+  background: var(--forest);
+  color: var(--paper);
+  padding: 80px 24px 96px;
+  text-align: center;
+}
+
+.hero .hero-greeting {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: #CFE3D4;
+  max-width: none;
+  margin: 0 0 18px;
+}
+
+.stamp {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--citrus);
+  border: 1px solid var(--citrus);
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+/* Practical 3-III: text size in vw (viewport width), clamped so it never gets silly */
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: #CFE3D4;
+  max-width: 440px;
+  margin: 0 auto 28px;
+}
+
+.hero-search {
+  max-width: 460px;
+  margin: 0 auto 22px;
+}
+
+.hero-search .form-control { border-radius: 8px 0 0 8px; padding: 12px 16px; }
+.hero-search .btn { border-radius: 0 8px 8px 0; padding-inline: 22px; }
+
+.locate-btn {
+  display: inline-block;
+  background: transparent;
+  color: var(--citrus);
+  border: 1px solid var(--citrus);
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Work Sans', sans-serif;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.locate-btn:hover { background: var(--citrus); color: var(--forest); }
+.locate-btn:disabled { opacity: 0.6; cursor: default; }
+
+.hero .locate-result {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: #CFE3D4;
+  min-height: 18px;
+  margin: 0 auto 22px;
+  max-width: 560px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.hero .locate-result.visible { opacity: 1; }
+
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta {
+  display: inline-block;
+  background: var(--citrus);
+  color: var(--forest);
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.cta:hover { color: var(--forest); background: #E59A2B; }
+
+.cta-alt {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(247, 243, 232, 0.4);
+}
+
+.cta-alt:hover { background: rgba(247, 243, 232, 0.1); color: var(--paper); }
+
+/* Practical 3-II: images scale with the browser (width + max-width),
+   and <picture> in index.html swaps in a smaller file on narrow screens */
+.store-photo {
+  padding: 48px 40px 0;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.store-photo figure {
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(20, 49, 31, 0.12);
+}
+
+.store-photo img {
+  width: 100%;
+  max-width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- 5. Home: categories, featured, banner ---------- */
+
+.section-head {
+  font-family: 'Fraunces', serif;
+  font-size: 1.8rem;
+  color: var(--forest);
+  margin-bottom: 8px;
+}
+
+.section-sub {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+.categories {
+  padding: 70px 24px 40px;
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.category-card {
+  display: block;
+  background: #fff;
+  border-radius: 10px;
+  padding: 26px 14px;
+  box-shadow: 0 8px 20px rgba(20, 49, 31, 0.06);
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(20, 49, 31, 0.1);
+}
+
+.cat-icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+
+.category-card h3 { font-size: 1rem; margin-bottom: 6px; color: var(--ink); }
+.category-card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+.featured {
+  padding: 30px 24px 70px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.featured-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.featured-head .section-head { margin: 0; }
+
+.link-more { font-weight: 600; font-size: 14px; color: var(--leaf-dark); }
+.link-more:hover { color: var(--forest); text-decoration: underline; }
+
+.banner {
+  background: var(--leaf);
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.banner-text h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.9rem;
+  color: var(--forest);
+  margin-bottom: 10px;
+}
+
+.banner-text p {
+  max-width: 440px;
+  margin: 0 auto 24px;
+  color: #16371F;
+}
+
+/* ---------- 6. Product card (Bootstrap .card, re-styled) ---------- */
+
+.product-card {
+  position: relative;
+  height: 100%;
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(20, 49, 31, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(20, 49, 31, 0.1);
+}
+
+.product-card[draggable="true"] { cursor: grab; }
+.product-card.dragging { opacity: 0.4; transform: scale(0.97); }
+
+.product-thumb {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 132px;
+  background: var(--mist);
+}
+
+.thumb-vegetables { background: #E3F0DC; }
+.thumb-fruit      { background: #FCE6D6; }
+.thumb-dairy      { background: #E7EEF6; }
+.thumb-bakery     { background: #F6E7CC; }
+.thumb-pantry     { background: #EFE6D3; }
+.thumb-herbs      { background: #D9EEDF; }
+
+.product-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img { transform: scale(1.05); }
+
+.product-emoji {
+  font-size: 3.6rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover .product-emoji { transform: scale(1.08) rotate(-4deg); }
+
+.badge-organic {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  background: var(--forest);
+  color: var(--paper);
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.wish-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--tomato);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(20, 49, 31, 0.15);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.wish-btn:hover { transform: scale(1.1); }
+.wish-btn.is-on { background: var(--tomato); color: #fff; }
+
+.product-body {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px 16px;
+  text-align: left;
+}
+
+.product-cat {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--leaf-dark);
+  margin-bottom: 2px;
+}
+
+.product-name { font-size: 1.02rem; font-weight: 600; margin: 0 0 2px; }
+.product-name a:hover { text-decoration: underline; }
+
+.product-meta { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+
+.product-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.product-price {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--forest);
+}
+
+/* ---------- 7. Products page: header, filters, drag & drop ---------- */
+
+.page-head {
+  background: var(--forest);
+  color: var(--paper);
+  text-align: center;
+  padding: 48px 24px 56px;
+}
+
+.page-head h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 8px;
+}
+
+.page-head p { color: #CFE3D4; margin: 0 auto; max-width: 480px; }
+
+.filter-bar {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(20, 49, 31, 0.06);
+  padding: 20px;
+  margin: -28px 0 24px;
+  position: relative;
+}
+
+.chip {
+  border: 1px solid rgba(20, 49, 31, 0.25);
+  background: #fff;
+  color: var(--forest);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Work Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.chip:hover { border-color: var(--forest); }
+.chip.active { background: var(--forest); color: var(--paper); border-color: var(--forest); }
+
+.result-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.drag-tip { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
+
+.empty-state {
+  text-align: center;
+  padding: 56px 16px;
+  color: var(--muted);
+}
+
+.empty-state .big { font-size: 2.6rem; display: block; margin-bottom: 8px; }
+
+/* Drag & Drop dock — slides up only while a product is being dragged */
+.drop-dock {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  z-index: 60;
+  display: flex;
+  gap: 14px;
+  width: min(560px, calc(100vw - 32px));
+  transform: translate(-50%, 150%);
+  transition: transform 0.25s ease;
+}
+
+body.is-dragging .drop-dock { transform: translate(-50%, 0); }
+
+.drop-zone {
+  flex: 1;
+  padding: 18px 12px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--forest);
+  background: rgba(247, 243, 232, 0.97);
+  border: 2px dashed rgba(20, 49, 31, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(20, 49, 31, 0.18);
+  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+
+.drop-zone small {
+  display: block;
+  margin-top: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.drop-zone.over {
+  background: var(--citrus);
+  border-color: var(--forest);
+  border-style: solid;
+  transform: scale(1.04);
+}
+
+.drop-zone.over small { color: var(--forest); }
+
+/* ---------- 8. Product details ---------- */
+
+.detail-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  min-height: 240px;
+  border-radius: 18px;
+  box-shadow: 0 16px 36px rgba(20, 49, 31, 0.1);
+}
+
+.detail-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.detail-tile .detail-emoji { font-size: clamp(5rem, 16vw, 8rem); line-height: 1; }
+.detail-tile .badge-organic { font-size: 12px; padding: 4px 12px; left: 16px; top: 16px; }
+
+.detail-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--forest);
+  margin-bottom: 6px;
+}
+
+.detail-price {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 12px 0 4px;
+}
+
+.detail-price small { font-size: 0.9rem; color: var(--muted); }
+
+.stock-note { font-size: 14px; font-weight: 500; margin-bottom: 16px; }
+.stock-ok { color: var(--leaf-dark); }
+.stock-low { color: #9A6100; }
+.stock-out { color: var(--tomato); }
+
+.detail-desc { max-width: 60ch; line-height: 1.65; }
+
+.qty-group { width: 140px; flex-wrap: nowrap; }
+.qty-group .form-control { text-align: center; padding-inline: 4px; }
+
+.nutrition-table { max-width: 360px; font-size: 14px; --bs-table-bg: transparent; }
+.nutrition-table th { font-weight: 500; }
+.nutrition-table td { text-align: right; font-family: 'IBM Plex Mono', monospace; }
+
+.breadcrumb { font-size: 14px; }
+.breadcrumb a { color: var(--leaf-dark); }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* ---------- 9. Checkout ---------- */
+
+.checkout-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(20, 49, 31, 0.06);
+  padding: 24px;
+}
+
+.checkout-card h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  color: var(--forest);
+  margin-bottom: 16px;
+}
+
+.summary-sticky { position: sticky; top: 96px; }
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(20, 49, 31, 0.07);
+}
+
+.summary-line .amt { font-family: 'IBM Plex Mono', monospace; }
+.summary-thumb { width: 36px; height: 36px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+.summary-emoji { width: 36px; text-align: center; font-size: 1.4rem; flex-shrink: 0; }
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 14px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--forest);
+}
+
+.delivery-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--leaf-dark);
+  margin: 8px 0 0;
+}
+
+.order-success { text-align: center; padding: 48px 20px; max-width: 520px; margin: 0 auto; }
+.order-success .big { font-size: 3.4rem; display: block; margin-bottom: 8px; }
+.order-success h1 { font-family: 'Fraunces', serif; color: var(--forest); }
+
+.order-id {
+  display: inline-block;
+  margin: 12px 0 20px;
+  padding: 6px 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  background: var(--mist);
+  border-radius: 20px;
+}
+
+/* ---------- Tailwind pages: base resets ----------
+   Tailwind's own reset (preflight) is switched off so it can't break the
+   Bootstrap navbar. These :where() rules remove Bootstrap's default
+   paragraph/list margins on those pages, at the lowest possible
+   specificity, so Tailwind's utilities (mt-3, mb-4 ...) still win. */
+:where(.tw-page) :where(p, dl, dd, ul, ol, h1, h2, h3, h4) { margin-bottom: 0; }
+:where(.tw-page) :where(ul, ol) { padding-left: 0; }
+:where(.tw-page) dt { font-weight: 400; }
+
+/* ---------- 10. Toast, footer ---------- */
+
+.fc-toast {
+  position: fixed;
+  top: 84px;
+  left: 50%;
+  z-index: 100;
+  max-width: calc(100vw - 32px);
+  padding: 10px 18px;
+  font-size: 14px;
+  color: var(--paper);
+  background: var(--forest);
+  border-radius: 30px;
+  box-shadow: 0 8px 24px rgba(20, 49, 31, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fc-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  color: #6B7469;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ============================================================
+   Responsive breakpoints — Practical 3-IV (media queries)
+   Desktop-first base styles above; adjustments narrow down.
+   ============================================================ */
+
+/* ---------- Tablet (<= 900px) ---------- */
+
+@media (max-width: 900px) {
+  .navbar { padding: 16px 24px; }
+  .nav-links { gap: 20px; }
+
+  .hero { padding: 64px 20px 80px; }
+  .categories { padding: 56px 20px 32px; }
+  .featured { padding: 24px 20px 56px; }
+  .banner { padding: 48px 20px; }
+
+  .store-photo { padding: 40px 24px 0; }
+  .store-photo img { height: 320px; }
+}
+
+/* ---------- Mobile (<= 600px) ---------- */
+
+@media (max-width: 600px) {
+  .navbar { padding: 14px 20px; }
+  .nav-links { gap: 14px; }
+
+  .hero { padding: 48px 18px 64px; }
+  .hero h1 { font-size: clamp(2rem, 9vw, 2.8rem); }
+  .hero p { font-size: 1rem; max-width: 100%; }
+
+  .stamp { font-size: 11px; padding: 4px 8px; }
+
+  .cta { width: 100%; text-align: center; padding: 12px 20px; }
+  .hero-ctas { flex-direction: column; width: 100%; }
+
+  .store-photo { padding: 28px 16px 0; }
+  .store-photo figure { border-radius: 10px; }
+  .store-photo img { height: 220px; }
+
+  .categories { padding: 44px 16px 24px; }
+  .section-head { font-size: 1.5rem; }
+  .category-card { padding: 20px 12px; }
+  .cat-icon { font-size: 1.6rem; }
+
+  .banner { padding: 40px 18px; }
+  .banner-text h2 { font-size: 1.5rem; }
+
+  .page-head { padding: 36px 18px 48px; }
+  .filter-bar { padding: 16px; margin-top: -24px; }
+
+  .product-thumb { height: 108px; }
+  .product-emoji { font-size: 3rem; }
+  .product-body { padding: 12px; }
+  .product-price { font-size: 0.95rem; }
+
+  .detail-tile { min-height: 200px; }
+  .summary-sticky { position: static; }
+}
+
+/* ---------- Small mobile (<= 380px) ---------- */
+
+@media (max-width: 380px) {
+  .logo { font-size: 1.1rem; }
+  .nav-link { font-size: 13px; }
+  .hero h1 { font-size: 1.8rem; }
+  .store-photo img { height: 180px; }
+
+  /* one product per row so cards never get cramped */
+  #product-grid > *,
+  #featured-grid > *,
+  #related-grid > * { flex: 0 0 100%; max-width: 100%; }
+}
